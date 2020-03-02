@@ -57,11 +57,15 @@ import MenuItem from '../menu-item/menu-item.component';
 
     }/*constructor ends */
 
+    /**
+     * *we here use spread operator(...) to indicate all the other properties title={title} imageUrl={imageUrl} size={size} linkUrl = {linkUrl}
+     * ? {...otherSectionProps} learn about spread operator
+     */
     render(){
         return(
             <div className='directory-menu'>
-                {this.state.sections.map(({title,imageUrl,id,size})=>(
-                    <MenuItem key={id} title={title} imageUrl={imageUrl} size={size}/>
+                {this.state.sections.map(({id, ...otherSectionProps})=>(
+                    <MenuItem key={id} {...otherSectionProps} />
                 ))}
             </div>
         );
