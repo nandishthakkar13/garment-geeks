@@ -23,6 +23,9 @@ const menuItem = ({title,imageUrl,size,history,linkUrl,match}) =>{
          * *so we kept them as child here
          * *then using css property position:absolute the content box will always be on top of image div and it will be always 
          * *at the calculation point 
+         * 
+         * ?Why do we use style object to hold the backgroundImage and not use img tag
+         * ?Check out <div/> declaration
          */
         
         //`${match.url}${linkUrl}` (there shouldnt be any space between them)  in one of the cases evaluates to /shop/hats
