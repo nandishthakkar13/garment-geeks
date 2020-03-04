@@ -2,3 +2,9 @@ body{
     font-family: 'open sans condense';
     padding: 20px 60px;
 }
+
+
+a{
+    text-decoration: none;
+    color: black;
+}
