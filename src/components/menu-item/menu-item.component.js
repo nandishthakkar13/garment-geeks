@@ -12,6 +12,8 @@ const menuItem = ({title,imageUrl,size,history,linkUrl,match}) =>{
      * *We add style object here and pass background image dynamically so we can handle changes from Directory state
      * *
      */
+
+    
     return(
 
         /**
@@ -29,7 +31,11 @@ const menuItem = ({title,imageUrl,size,history,linkUrl,match}) =>{
          */
         
         //`${match.url}${linkUrl}` (there shouldnt be any space between them)  in one of the cases evaluates to /shop/hats
-<div  className={`${size} menu-item`} onClick={() => history.push(`${match.url}${linkUrl}`)}>         
+        // still try and understand how does the background div takes up the whole space and the content div
+        // is placed at the center of it => I know it is due to setting css property position : absolute 
+
+        
+        <div  className={`${size} menu-item`} onClick={() => history.push(`${match.url}${linkUrl}`)}>         
         <div style={{backgroundImage: `url(${imageUrl})`}} className='background-image' />
 
             <div className='content'>
