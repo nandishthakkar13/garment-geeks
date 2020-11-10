@@ -32,6 +32,12 @@ class SignIn extends React.Component{
     this.setState({[name]: value});
    }
 
+   /*
+   we add type=button to google button, because when we click google button the form fields prompt to fill it in
+   as any button inside form tag treats it as submit button
+   but with the google button we dont want that feature
+   so by adding type=button we prevent that behaviour
+     */
     render(){
         return(
             <div className='sign-in'>
@@ -42,7 +48,9 @@ class SignIn extends React.Component{
                     <FormInput type='password' name='password' label='password' value={this.state.password} handleChange={this.handleChange} required/>
                     <div className='buttons'>
                     <CustomButton type='submit'>Sign in</CustomButton>
-                    <CustomButton onClick={signInWithGoogle} isGoogleSignIn> Sign in with Google</CustomButton>
+                    
+                    
+                    <CustomButton type='button' onClick={signInWithGoogle} isGoogleSignIn> Sign in with Google</CustomButton>
                     </div>
                     </form>
             </div>
