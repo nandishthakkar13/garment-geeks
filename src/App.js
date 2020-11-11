@@ -4,7 +4,7 @@ import ShopPage from "./pages/shoppage/shop.component";
 import Header from "./components/header/header.component";
 import SignInAndSignUpPage from "./pages/sign-in-and-sign-up/sign-in-and-sign-up.component";
 import "./App.css";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import { createUserProfileDocument } from "./firebase/firebase.utils";
 import { auth } from "./firebase/firebase.utils";
 import { connect } from "react-redux";
@@ -43,7 +43,6 @@ class App extends React.Component {
           Basically setCurrentUser replaces this.setstate but behind the scene it works the same.
           */
 
-
           setCurrentUser({
             id: snapshot.id,
             ...snapshot.data(),
@@ -62,6 +61,8 @@ class App extends React.Component {
   componentWillUnmount() {
     this.unsubscribeFromAuth();
   }
+
+  //using render inside route component, basically to check if the user is signed in then we want to redirect the user to homepage and if the user is not signed in then we want the user to be on the sigin page. And to conditionally check this, we are using render instead of just using component
   render() {
     return (
       <div className="App">
@@ -69,15 +70,30 @@ class App extends React.Component {
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route path="/shop" component={ShopPage} />
-          <Route path="/signin" component={SignInAndSignUpPage} />
+
+          <Route
+            exact
+            path="/signin"
+            render={() =>
+              this.props.currentUser ? (
+                <Redirect to="/" />
+              ) : (
+                <SignInAndSignUpPage />
+              )
+            }
+          />
         </Switch>
       </div>
     );
   }
 }
 
+const mapStateToProps = ({ user }) => ({
+  currentUser: user.currentUser,
+});
+
 const mapDispatchToProps = (dispatch) => ({
   setCurrentUser: (user) => dispatch(setCurrentUser(user)),
 });
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
