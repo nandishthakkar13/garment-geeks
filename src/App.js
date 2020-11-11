@@ -7,6 +7,8 @@ import "./App.css";
 import { Route, Switch } from "react-router-dom";
 import { createUserProfileDocument } from "./firebase/firebase.utils";
 import { auth } from "./firebase/firebase.utils";
+import { connect } from "react-redux";
+import { setCurrentUser } from "./redux/user/user.actions";
 
 /**
  * ! Directory is the component holding everything
@@ -23,40 +25,36 @@ import { auth } from "./firebase/firebase.utils";
   to keep the current user from firebase authentication in our current state
    */
 class App extends React.Component {
-  constructor() {
-    super();
-
-    this.state = {
-      currentUser: null,
-    };
-  }
-
   // setting a class variable to unsubscribe from authstatechanged function
   unsubscribeFromAuth = null;
 
   /*we want to track user once our application is mounted 
     onAuthStateChanged returns a function to unsubscribe */
   componentDidMount() {
+    const { setCurrentUser } = this.props;
+
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth);
 
         userRef.onSnapshot((snapshot) => {
-          this.setState({
-            currentUser:{
+          /*we get the setCurrentUser function as a prop from redux which is an action which fires and takes an user as a param and sets as payload for that action which in turn sets the reducer state accordingly which updates the redux store, finally making the necessary view(UI) changes 
+          
+          Basically setCurrentUser replaces this.setstate but behind the scene it works the same.
+          */
+
+
+          setCurrentUser({
             id: snapshot.id,
-            ...snapshot.data()
-            }
+            ...snapshot.data(),
           });
         });
       }
 
-     
       //if userAuth comes null then we are setting our state object currentuser to null.
-      else{
-        this.setState({currentUser: userAuth});
+      else {
+        setCurrentUser(userAuth);
       }
-
     });
   }
 
@@ -67,7 +65,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <Header currentUser={this.state.currentUser} />
+        <Header />
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route path="/shop" component={ShopPage} />
@@ -78,4 +76,8 @@ class App extends React.Component {
   }
 }
 
-export default App;
+const mapDispatchToProps = (dispatch) => ({
+  setCurrentUser: (user) => dispatch(setCurrentUser(user)),
+});
+
+export default connect(null, mapDispatchToProps)(App);
