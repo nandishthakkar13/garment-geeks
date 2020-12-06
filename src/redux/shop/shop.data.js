@@ -1,5 +1,18 @@
-const SHOP_DATA = [
-    {
+/*converting the data stored as array into object
+As querying an object is easy compared to array.
+as we are getting the collectionId and based on that we are searching in our array(before we converted our data from array to object)
+now we changed that back to object
+searching through object is easy even if theres too much data
+changing from array to object and storing it in this way is called normalizing data.
+
+This is the right way of storing this kind of data where we need to pick individual element off of our collection. (turning into object from array)
+
+Similarly if we had an individual product page we would have converted our item array into an object.
+but we are not doing that for now. (coz we only have few products)
+*/
+
+const SHOP_DATA = {
+   hats: {
       id: 1,
       title: 'Hats',
       routeName: 'hats',
@@ -60,7 +73,7 @@ const SHOP_DATA = [
         }
       ]
     },
-    {
+    sneakers:{
       id: 2,
       title: 'Sneakers',
       routeName: 'sneakers',
@@ -115,7 +128,7 @@ const SHOP_DATA = [
         }
       ]
     },
-    {
+    jackets:{
       id: 3,
       title: 'Jackets',
       routeName: 'jackets',
@@ -152,7 +165,7 @@ const SHOP_DATA = [
         }
       ]
     },
-    {
+    womens: {
       id: 4,
       title: 'Womens',
       routeName: 'womens',
@@ -201,7 +214,7 @@ const SHOP_DATA = [
         }
       ]
     },
-    {
+    mens:{
       id: 5,
       title: 'Mens',
       routeName: 'mens',
@@ -244,7 +257,7 @@ const SHOP_DATA = [
         }
       ]
     }
-  ];
+  };
   
   export default SHOP_DATA;
   

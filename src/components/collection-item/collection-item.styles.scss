@@ -1,5 +1,8 @@
+/*first the width of the collection-item was 22% that means 22 percent of the parent class*/
+/*changing it to 22vw means 22 percent of the total width of the page so if we resize the page the width would still be 22 percent of the overall width of the page */
+
 .collection-item {
-    width: 22%;
+    width: 22vw;
     display: flex;
     flex-direction: column;
     height: 350px;
